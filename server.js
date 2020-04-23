@@ -52,7 +52,7 @@ app.get("/api/workouts", (req, res) => {
 
 
 app.post("/api/workouts",(req,res) => {
-  //const newWorkout =db.Workout.create()
+  db.Workout.create({})
   console.log (req.body)
 
   // .then(() => {
