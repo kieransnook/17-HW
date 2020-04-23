@@ -41,7 +41,7 @@ app.get("/stats", (req, res) => {
 
 //routes for data
 app.get("/api/workouts", (req, res) => {
-  db.Workout.find()
+  db.Workout.find({})
       .then(dbworkout => {
           res.json(dbworkout);
       })
@@ -52,12 +52,16 @@ app.get("/api/workouts", (req, res) => {
 
 
 app.post("/api/workouts",(req,res) => {
-  db.Workout.create()
-  .then(dbWorkout => {
-    res.json(dbWorkout);
-  })
-  .catch(err => {res.json(err);
-  })
+  //const newWorkout =db.Workout.create()
+  console.log (req.body)
+
+  // .then(() => {
+  //   //.log (dbWorkout)
+  //   console.log ("from post")
+  //   //.json(dbWorkout);
+  // })
+  // .catch(err => {res.json(err);
+  // })
 });
 
 
@@ -89,7 +93,20 @@ app.delete("/api/workouts", ({ body }, res) => {
       res.json(err);
     });
 });
-
+app.put("/api/workouts/:id", ({ body, params }, res) => {
+  db.Workout.findByIdAndUpdate(
+    params.id,
+    { $push: { exercises: body } },
+    // "runValidators" will ensure new exercises meet our schema requirements
+    { new: true, runValidators: true }
+  )
+    .then(dbWorkout => {
+      res.json(dbWorkout);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
