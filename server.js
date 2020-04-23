@@ -4,6 +4,8 @@ const path = require("path");
 
 const PORT = process.env.PORT || 3000
 
+const db = require("./models")
+
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -33,6 +35,26 @@ app.get("/stats", (req, res) => {
 app.get("/workout", (req, res) => {
   res.sendFile(path.join(__dirname, "public/workout.html"));
 });
+
+//routes for data
+app.get("/api/workouts", (req, res) => {
+  db.Workout.find({})
+      .then(dbWorkout => {
+          res.json(dbWorkout);
+      })
+});
+
+
+app.post("/api/workouts",(req,res) => {
+  db.Workout.create({})
+  .then(dbWorkout => {
+    res.json(dbWorkout);
+  })
+  .catch(err => {res.json(err);
+  })
+});
+
+
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
 });
