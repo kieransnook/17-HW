@@ -34,10 +34,7 @@ app.get("/exercise", (req, res) => {
 app.get("/stats", (req, res) => {
   res.sendFile(path.join(__dirname, "public/stats.html"));
 });
-//route for workout page
-// app.get("/workout", (req, res) => {
-//   res.sendFile(path.join(__dirname, "public/workout.html"));
-// });
+
 
 //routes for data
 app.get("/api/workouts", (req, res) => {
@@ -54,14 +51,6 @@ app.get("/api/workouts", (req, res) => {
 app.post("/api/workouts",(req,res) => {
   db.Workout.create({})
   console.log (req.body)
-
-  // .then(() => {
-  //   //.log (dbWorkout)
-  //   console.log ("from post")
-  //   //.json(dbWorkout);
-  // })
-  // .catch(err => {res.json(err);
-  // })
 });
 
 
